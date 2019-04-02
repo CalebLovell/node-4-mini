@@ -12,6 +12,17 @@ module.exports = {
             message,
         };
         allMessages.push(newMessage);
-        res.send(allMessages);
+
+        if (req.session.history) {
+            req.session.history.push(newMessage);
+        } else {
+            req.session.history = [];
+            req.session.history.push(newMessage);
+        };
+        res.send(allMessages);;
+    },
+
+    history: (req, res) => {
+        res.send(req.session.history);
     },
 };
